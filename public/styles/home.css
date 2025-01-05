@@ -17,6 +17,9 @@ body {
     flex-direction: row;
     width: 80%;
     height: 80%;
+    background-color: rgba(0, 0, 0, 0); /* Light overlay for readability */
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .column {
@@ -57,4 +60,11 @@ body {
     color: white;
 }
 
-.b
+.button-signin {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-watch:hover, .button-signin:hover {
+    opacity: 0.9;
+}
