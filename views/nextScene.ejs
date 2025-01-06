@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Game</title>
+  <link rel="stylesheet" href="/styles/nextScene.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+  <div class="header">
+    <h1>Interactive Game</h1>
+  </div>
+  <div class="container">
+    <div class="scene">
+      <h2>Scene</h2>
+      <p id="scene-text"></p>
+    </div>
+    <div class="question">
+      <h2>Question</h2>
+      <p id="question-text"></p>
+      <div class="options" id="options-list"></div>
+      <button id="submit-button" disabled>Submit</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedOption = null;
+    // const token = "<%= token %>";
+    // Fetch initial data
+    function fetchGameState() {
+        const token = "<%= token %>";
+  fetch('http://127.0.0.1:5000/data', {
+    headers: {
+      'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+    },
+  })
+    .then(response => {
+      if (response.status === 401) {
+        console.error('Unauthorized. Please log in again.');
+        return;
+      }
+      return response.json();
+    })
+    .then(data => updateUI(data))
+    .catch(error => console.error('Error fetching data:', error));
+}
+
+    // Update UI with the game state
+    function updateUI(data) {
+      document.getElementById('scene-text').innerText = data.scene;
+      document.getElementById('question-text').innerText = data.question;
+
+      const optionsList = document.getElementById('options-list');
+      optionsList.innerHTML = ''; // Clear previous options
+
+      data.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'option';
+        optionElement.innerText = option;
+        optionElement.onclick = () => selectOption(optionElement, option);
+        optionsList.appendChild(optionElement);
+      });
+
+      document.getElementById('submit-button').disabled = true; // Disable submit initially
+      selectedOption = null; // Reset selected option
+    }
+
+    // Handle option selection
+    function selectOption(element, option) {
+      const options = document.querySelectorAll('.option');
+      options.forEach(opt => opt.style.backgroundColor = ''); // Clear previous selection
+      element.style.backgroundColor = '#d3d3d3'; // Highlight selected option
+      selectedOption = option;
+      document.getElementById('submit-button').disabled = false; // Enable submit
+    }
+
+    // Submit selected option
+    function submitAnswer() {
+        const token = "<%= token %>";
+  if (!selectedOption) return;
+
+  fetch('http://127.0.0.1:5000/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+    },
+    body: JSON.stringify({ choice: selectedOption }),
+  })
+    .then(response => {
+      if (response.status === 401) {
+        console.error('Unauthorized. Please log in again.');
+        return;
+      }
+      return response.json();
+    })
+    .then(data => updateUI(data))
+    .catch(error => console.error('Error submitting answer:', error));
+}
+
+    // Initialize
+    document.getElementById('submit-button').onclick = submitAnswer;
+    fetchGameState();
+  </script>
+</body>
+</html>
