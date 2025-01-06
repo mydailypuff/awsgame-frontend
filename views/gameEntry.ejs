@@ -16,8 +16,18 @@
 
         <!-- Second Column: Play Button -->
         <div class="column">
-            <button class="button-play" onclick="window.location.href='/callback';">Play</button>
+            <!-- <button class="button-play" onclick="window.location.href='/callback';">Play</button> -->
+            <button class="button-play" id='play-button''>Play</button>
         </div>
     </div>
+    <script>
+        // Attach click handler to Play button
+        document.getElementById('play-button').onclick = () => {
+          // Send token to the nextScene page
+          const accessToken = "<%= token %>"; // Access token from session
+          window.location.href = `/nextScene?token=${encodeURIComponent(accessToken)}`;
+        };
+      </script>
+
 </body>
 </html>
