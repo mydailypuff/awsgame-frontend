@@ -79,13 +79,42 @@ app.get('/login', (req, res) => {
 // Game Entry route
 app.get('/gameEntry', checkAuth, (req, res) => {
     console.log("Calling /gameEntry")
-    if (!req.isAuthenticated) {
-        console.log('User not authenticated. Redirecting to login.');
+    console.log(req.session.accessToken)
+    const token = req.session.accessToken
+    // if (!req.isAuthenticated) {
+    //     console.log('User not authenticated. Redirecting to login.');
+    //     return res.redirect('/nextScene');
+    // }
+
+    // res.render('gameEntry', { userInfo: req.session.userInfo });
+    if (!token) {
+        console.log('No token provided. Redirecting to login.');
         return res.redirect('/login');
     }
 
-    res.render('gameEntry', { userInfo: req.session.userInfo });
+    res.render('gameEntry', { token });
 });
+
+
+// next Scene
+app.get('/nextScene', checkAuth, (req, res) => {
+    console.log("Calling /nextScene")
+    const token=req.query.token
+    // if (!req.isAuthenticated) {
+    //     console.log('User not authenticated. Redirecting to login.');
+    //     return res.redirect('/login');
+    // }
+
+    // res.render('nextScene', { userInfo: req.session.userInfo });
+    if (!token) {
+        console.log('No token provided. Redirecting to login.');
+        return res.redirect('/login');
+    }
+
+    res.render('nextScene', { token });
+
+});
+
 
 // Callback route
 app.get('/callback', async (req, res) => {
@@ -104,7 +133,8 @@ app.get('/callback', async (req, res) => {
 
         const userInfo = await client.userinfo(tokenSet.access_token);
         req.session.userInfo = userInfo;
-
+        
+        req.session.accessToken=tokenSet.access_token
         console.log('User successfully authenticated:', userInfo);
         res.redirect('/gameEntry');
     } catch (err) {
