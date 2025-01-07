@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roll Dice</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="../styles/dice.css">
 </head>
 <body>
     <div class="container">
@@ -17,17 +17,21 @@
         const resultDiv = document.getElementById('result');
 
         rollDiceBtn.addEventListener('click', () => {
-            // Clear the result area
+            // Hide the button after clicking
+            rollDiceBtn.style.display = 'none';
+
+            // Clear the result area and show the rolling dice GIF
             resultDiv.innerHTML = '<img src="../images/dice-game.gif" alt="Rolling Dice">';
 
             // Wait for 3 seconds and then display a random number
             setTimeout(() => {
                 const randomNumber = Math.floor(Math.random() * 6) + 1;
                 resultDiv.innerHTML = `<p>You rolled: <span>${randomNumber}</span></p>`;
-            
+
+                // Send the message to close the modal
                 setTimeout(() => {
-                window.parent.postMessage('close-modal', '*'); // Send the message
-              }, 500); 
+                    window.parent.postMessage('close-modal', '*'); // Notify the parent to close the modal
+                }, 2000);
             }, 2000);
         });
     </script>

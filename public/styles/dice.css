@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: #58d68d;
 }
 
 /* Center Container */
@@ -35,4 +35,18 @@ button:hover {
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Result Display
+
+#result p {
+    font-size: 48px; /* Large font size */
+    font-weight: bold; /* Bold text */
+    color: white; /* White font color */
+    margin-top: 20px; /* Add spacing above */
+    text-align: center; /* Center-align text */
+}
+
+/* Number Styling */
+#result p span {
+    font-size: 56px; /* Larger font size for the number */
+    font-weight: bold; /* Extra bold for emphasis */
+    color: white; /* Yellow color for the dice value */
+}
