@@ -59,6 +59,8 @@
             };
             
             console.log(payload)
+            const accessToken = "<%= token %>"; // Access token from session
+            window.location.href = `/nextScene?token=${encodeURIComponent(accessToken)}`;
 
             try {
                 // Send data to the backend API
@@ -75,11 +77,11 @@
                     const accessToken = "<%= token %>"; // Access token from session
                     window.location.href = `/nextScene?token=${encodeURIComponent(accessToken)}`;
                 } else {
-                    alert('Failed to save character data. Please try again.');
+                    alert('Failed to save character data. Please try again.');                  
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+                alert('An error occurred. Please try again.');                
             }
         };
     </script>

@@ -22,28 +22,37 @@
       <button id="submit-button" disabled>Submit</button>
     </div>
   </div>
+  <div id="dice-popup" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeDicePopup()">&times;</span>
+      <iframe src="" id="dice-iframe" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
+  </div>
 
   <script>
     let selectedOption = null;
-    // const token = "<%= token %>";
+    const rollDice = true; // Hardcoded boolean value
+    if (rollDice) {
+        showDicePopup();
+      }
     // Fetch initial data
     function fetchGameState() {
-        const token = "<%= token %>";
-  fetch('http://127.0.0.1:5000/data', {
-    headers: {
-      'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
-    },
-  })
-    .then(response => {
-      if (response.status === 401) {
-        console.error('Unauthorized. Please log in again.');
-        return;
-      }
-      return response.json();
-    })
-    .then(data => updateUI(data))
-    .catch(error => console.error('Error fetching data:', error));
-}
+      const token = "<%= token %>";
+      fetch('http://127.0.0.1:5000/data', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+        .then(response => {
+          if (response.status === 401) {
+            console.error('Unauthorized. Please log in again.');
+            return;
+          }
+          return response.json();
+        })
+        .then(data => updateUI(data))
+        .catch(error => console.error('Error fetching data:', error));
+    }
 
     // Update UI with the game state
     function updateUI(data) {
@@ -63,6 +72,9 @@
 
       document.getElementById('submit-button').disabled = true; // Disable submit initially
       selectedOption = null; // Reset selected option
+
+      // Check if rollDice is true and show popup if so
+
     }
 
     // Handle option selection
@@ -76,27 +88,47 @@
 
     // Submit selected option
     function submitAnswer() {
-        const token = "<%= token %>";
-  if (!selectedOption) return;
+      const token = "<%= token %>";
+      if (!selectedOption) return;
 
-  fetch('http://127.0.0.1:5000/submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
-    },
-    body: JSON.stringify({ choice: selectedOption }),
-  })
-    .then(response => {
-      if (response.status === 401) {
-        console.error('Unauthorized. Please log in again.');
-        return;
-      }
-      return response.json();
-    })
-    .then(data => updateUI(data))
-    .catch(error => console.error('Error submitting answer:', error));
-}
+      fetch('http://127.0.0.1:5000/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ choice: selectedOption }),
+      })
+        .then(response => {
+          if (response.status === 401) {
+            console.error('Unauthorized. Please log in again.');
+            return;
+          }
+          return response.json();
+        })
+        .then(data => updateUI(data))
+        .catch(error => console.error('Error submitting answer:', error));
+    }
+
+  function showDicePopup() {
+      const token = "<%= token %>";
+      const popupUrl = `/dice?token=${encodeURIComponent(token)}`;
+      const iframe = document.getElementById('dice-iframe');
+      iframe.src = popupUrl;
+      document.getElementById('dice-popup').style.display = 'block';
+
+      window.addEventListener('message', (event) => {
+        if (event.data === 'close-modal') {
+            closeDicePopup(); // Close the modal when the message is received
+        }
+    });
+    
+  }
+
+  function closeDicePopup() {
+    document.getElementById('dice-popup').style.display = 'none';
+    document.getElementById('dice-iframe').src = ''; // Clear the iframe content
+  }
 
     // Initialize
     document.getElementById('submit-button').onclick = submitAnswer;

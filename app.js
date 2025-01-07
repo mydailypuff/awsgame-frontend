@@ -21,6 +21,11 @@ app.use(session({
 // Set view engine to EJS
 app.set('view engine', 'ejs');
 
+// Route for dice roller page
+app.get('/dice', (req,res) => {
+    res.render('dice');
+});
+
 // Initialize OpenID Client
 async function initializeClient() {
     try {

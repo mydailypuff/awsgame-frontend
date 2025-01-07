@@ -1,0 +1,38 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+/* Center Container */
+.container {
+    text-align: center;
+}
+
+/* Roll Dice Button */
+button {
+    background-color: #007bff; /* Blue color */
+    color: white; /* White text */
+    border: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold; /* Bold text */
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Result Display
