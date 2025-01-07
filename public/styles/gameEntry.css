@@ -18,8 +18,9 @@ body {
     flex-direction: row;
     width: 80%;
     height: 80%;
-    background-color: rgba(0, 0, 0, 0); /* Light overlay for readability */
+    background-color: rgba(255, 255, 255, 0.9); /* Light overlay for readability */
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
@@ -27,14 +28,47 @@ body {
     flex: 1;
     padding: 20px;
     text-align: center;
+    overflow-y: auto;
 }
 
 .column h1 {
     margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 
 .column p {
     font-size: 18px;
+    color: #666;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form label {
+    font-size: 16px;
+    color: #444;
+    margin-top: 10px;
+}
+
+form input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #007bff;
 }
 
 .button-play {
@@ -46,8 +80,24 @@ body {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .button-play:hover {
     background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .column {
+        padding: 10px;
+    }
+
+    form input {
+        width: 90%;
+    }
 }

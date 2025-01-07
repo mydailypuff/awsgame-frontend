@@ -14,20 +14,74 @@
             <p>3. Step three</p>
         </div>
 
-        <!-- Second Column: Play Button -->
+        <!-- Second Column: Game Entry Form -->
         <div class="column">
-            <!-- <button class="button-play" onclick="window.location.href='/callback';">Play</button> -->
-            <button class="button-play" id='play-button''>Play</button>
+            <h1>Character Details</h1>
+            <form id="character-form">
+                <label for="character-name">Name of the Character:</label><br>
+                <input type="text" id="character-name" name="characterName" placeholder="e.g., Aragon" required><br><br>
+
+                <label for="environment">Environment:</label><br>
+                <input type="text" id="environment" name="environment" placeholder="e.g., Forest" required><br><br>
+
+                <label for="race">Race:</label><br>
+                <input type="text" id="race" name="race" placeholder="e.g., Elf" required><br><br>
+
+                <label for="class">Class:</label><br>
+                <input type="text" id="class" name="class" placeholder="e.g., Warrior" required><br><br>
+
+                <label for="abilities">Abilities:</label><br>
+                <input type="text" id="abilities" name="abilities" placeholder="e.g., Swordsmanship, Archery" required><br><br>
+
+                <button class="button-play" id="play-button">Play</button>
+            </form>
         </div>
     </div>
-    <script>
-        // Attach click handler to Play button
-        document.getElementById('play-button').onclick = () => {
-          // Send token to the nextScene page
-          const accessToken = "<%= token %>"; // Access token from session
-          window.location.href = `/nextScene?token=${encodeURIComponent(accessToken)}`;
-        };
-      </script>
 
+    <script>
+        document.getElementById('play-button').onclick = async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            const characterName = document.getElementById('character-name').value;
+            const environment = document.getElementById('environment').value;
+            const race = document.getElementById('race').value;
+            const characterClass = document.getElementById('class').value;
+            const abilities = document.getElementById('abilities').value;
+
+            // Create payload for API
+            const payload = {
+                characterName,
+                environment,
+                race,
+                class: characterClass,
+                abilities
+            };
+            
+            console.log(payload)
+
+            try {
+                // Send data to the backend API
+                const response = await fetch('http://localhost:5000/characterinfo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    // Redirect to the nextScene page
+                    const accessToken = "<%= token %>"; // Access token from session
+                    window.location.href = `/nextScene?token=${encodeURIComponent(accessToken)}`;
+                } else {
+                    alert('Failed to save character data. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        };
+    </script>
 </body>
 </html>
