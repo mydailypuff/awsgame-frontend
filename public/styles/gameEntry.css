@@ -2,7 +2,7 @@
 
 body {
     margin: 0;
-    background-image: url('../images/background.jpg'); /* Path to your background image */
+    background-image: url('../images/707118.jpg'); /* Path to your background image */
     background-size: cover;
     background-position: center;
     font-family: Arial, sans-serif;
@@ -13,15 +13,28 @@ body {
     background-color: #f3f3f3;
 }
 
+/* Add a dark overlay */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Adjust the opacity (0.5 for semi-transparent black) */
+    z-index: 1; /* Ensure this overlay is below the content */
+}
+
 .container {
     display: flex;
     flex-direction: row;
     width: 80%;
     height: 80%;
-    background-color: rgba(255, 255, 255, 0.9); /* Light overlay for readability */
+    background-color: rgba(220, 209, 209, 0); /* Fully transparent background */
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgb(213, 203, 203); /* Keeps the shadow effect */
     overflow: hidden;
+    z-index: 2;
 }
 
 .column {
@@ -34,13 +47,25 @@ body {
 .column h1 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: #f7f0f0;
 }
 
 .column p {
     font-size: 18px;
-    color: #666;
+    color: #e6d9d9;
 }
+
+.column ol {
+    color: #e6d9d9; /* Set text color for ordered list */
+    margin-left: 20px; /* Add some spacing from the left for better alignment */
+    list-style-type: decimal; /* Keep the numbered bullets */
+}
+
+.column ol li {
+    margin-bottom: 10px; /* Add spacing between the list items */
+    line-height: 1.5; /* Improve readability with better line spacing */
+}
+
 
 form {
     display: flex;
@@ -49,8 +74,8 @@ form {
 }
 
 form label {
-    font-size: 16px;
-    color: #444;
+    font-size: 19px;
+    color: #e0d9d9;
     margin-top: 10px;
 }
 
@@ -61,7 +86,7 @@ form input {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    color: #333;
+    color: #eee5e5;
     background-color: #fff;
     outline: none;
     transition: border-color 0.3s ease;
@@ -75,7 +100,7 @@ form input:focus {
     background-color: #28a745;
     color: white;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 22px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
