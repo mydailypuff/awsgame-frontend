@@ -128,3 +128,25 @@ button:disabled {
   text-decoration: none;
   cursor: pointer;
 }
+
+.game-container {
+  position: absolute;
+  top: -60px;
+  left: 30px;
+  width: 200px;
+  height: 100px;
+  background-color: transparent;
+  display: flex;
+  align-items: flex-start;  /* Aligns content to the top */
+  padding-bottom: 20px;     /* Adds padding at the bottom */
+}
+
+/* Image styling */
+.game-container img {
+  width: 500%;     /* Slightly larger than container for better visibility */
+  height: 250%;
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-position: top left;  /* Positions image at the top */
+  margin-bottom: auto;    /* Pushes any extra space to the bottom */
+}
