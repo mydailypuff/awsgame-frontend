@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Game</title>
-  <link rel="stylesheet" href="/styles/nextScene.css"> <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/styles/nextScene.css">
 </head>
 <body>
   <div class="header">
@@ -19,74 +19,64 @@
       <h2>Question</h2>
       <p id="question-text"></p>
       <div class="options" id="options-list"></div>
-      <button id="submit-button" disabled>Submit</button>
+      <button class="submit" id="submit-button" disabled>Submit</button>
     </div>
   </div>
   <div id="dice-popup" class="modal" style="display:none;">
     <div class="modal-content">
-      <!-- <span class="close" onclick="closeDicePopup()">&times;</span> -->
       <iframe src="" id="dice-iframe" style="width:100%; height:90%; border:none;"></iframe>
     </div>
   </div>
 
   <script>
     let selectedOption = null;
-    const rollDice = true; // Hardcoded boolean value
-    if (rollDice) {
-        showDicePopup();
-      }
-    // Fetch initial data
-    function fetchGameState() {
-      const token = "<%= token %>";
-      fetch('http://127.0.0.1:5000/data', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-        .then(response => {
-          if (response.status === 401) {
-            console.error('Unauthorized. Please log in again.');
-            return;
-          }
-          return response.json();
-        })
-        .then(data => updateUI(data))
-        .catch(error => console.error('Error fetching data:', error));
-    }
 
-    // Update UI with the game state
+    const hardcodedResponse = {
+      sceneId: "1",
+      scene: "You stand atop the grand balcony of your palace, overlooking the vibrant and joyful land of Mikiland. The air is filled with the sounds of laughter and music as your subjects go about their daily lives. As the Mutant King and Emperor, you are loved and respected by your people. However, a dark shadow looms on the horizon, threatening the peace of your kingdom.",
+      question: "A mysterious figure has been spotted near the borders of Mikiland, causing unrest among your people. You must decide how to handle this threat.",
+      isRollDice: "true",
+      options: [
+        "Will you confront the figure directly",
+        "Send your trusted advisors to investigate",
+        "Gather your army for a potential battle?"
+      ],
+      isGameEnded: "false",
+      playerStatus: "win"
+    };
+
+   // const rolldice = document.getElementById('isRollDice');
+
+   if (hardcodedResponse.isRollDice === "true") {
+          showDicePopup(); // Call your function if isRollDice is "true"
+      }
+
     function updateUI(data) {
       document.getElementById('scene-text').innerText = data.scene;
       document.getElementById('question-text').innerText = data.question;
 
       const optionsList = document.getElementById('options-list');
-      optionsList.innerHTML = ''; // Clear previous options
+      optionsList.innerHTML = '';
 
       data.options.forEach((option, index) => {
-        const optionElement = document.createElement('div');
-        optionElement.className = 'option';
-        optionElement.innerText = option;
-        optionElement.onclick = () => selectOption(optionElement, option);
-        optionsList.appendChild(optionElement);
+        const button = document.createElement('button');
+        button.className = 'option';
+        button.innerText = option;
+        button.onclick = () => selectOption(button, option);
+        optionsList.appendChild(button);
       });
 
-      document.getElementById('submit-button').disabled = true; // Disable submit initially
-      selectedOption = null; // Reset selected option
-
-      // Check if rollDice is true and show popup if so
-
+      document.getElementById('submit-button').disabled = true;
+      selectedOption = null;
     }
 
-    // Handle option selection
-    function selectOption(element, option) {
-      const options = document.querySelectorAll('.option');
-      options.forEach(opt => opt.style.backgroundColor = ''); // Clear previous selection
-      element.style.backgroundColor = '#d3d3d3'; // Highlight selected option
+    function selectOption(button, option) {
+      document.querySelectorAll('.option').forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
       selectedOption = option;
-      document.getElementById('submit-button').disabled = false; // Enable submit
+      document.getElementById('submit-button').disabled = false;
     }
 
-    // Submit selected option
     function submitAnswer() {
       const token = "<%= token %>";
       if (!selectedOption) return;
@@ -109,8 +99,8 @@
         .then(data => updateUI(data))
         .catch(error => console.error('Error submitting answer:', error));
     }
-
-  function showDicePopup() {
+    
+    function showDicePopup() {
       const token = "<%= token %>";
       const popupUrl = `/dice?token=${encodeURIComponent(token)}`;
       const iframe = document.getElementById('dice-iframe');
@@ -130,9 +120,11 @@
     document.getElementById('dice-iframe').src = ''; // Clear the iframe content
   }
 
-    // Initialize
+
     document.getElementById('submit-button').onclick = submitAnswer;
-    fetchGameState();
+
+    // Initialize with hardcoded data
+    updateUI(hardcodedResponse);
   </script>
 </body>
 </html>

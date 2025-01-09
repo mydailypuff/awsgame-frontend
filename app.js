@@ -84,6 +84,7 @@ app.get('/login', (req, res) => {
 // Game Entry route
 app.get('/gameEntry', checkAuth, (req, res) => {
     console.log("Calling /gameEntry")
+    console.log(req.session.userInfo)
     console.log(req.session.accessToken)
     const token = req.session.accessToken
     // if (!req.isAuthenticated) {
