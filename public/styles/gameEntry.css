@@ -25,16 +25,40 @@ body::before {
     z-index: 1; /* Ensure this overlay is below the content */
 }
 
+.game-container {
+    position: absolute;
+    top: -60px;
+    left: 30px;
+    width: 200px;
+    height: 100px;
+    background-color: transparent;
+    display: flex;
+    align-items: flex-start;  /* Aligns content to the top */
+    padding-bottom: 20px;     /* Adds padding at the bottom */
+  }
+  
+  /* Image styling */
+  .game-container img {
+    width: 500%;     /* Slightly larger than container for better visibility */
+    height: 250%;
+    object-fit: contain;
+    background-repeat: no-repeat;
+    background-position: top left;  /* Positions image at the top */
+    margin-bottom: auto;    /* Pushes any extra space to the bottom */
+  }
+
+/* Adjust only the position of the existing container */
 .container {
     display: flex;
     flex-direction: row;
     width: 80%;
     height: 80%;
-    background-color: rgba(220, 209, 209, 0); /* Fully transparent background */
+    background-color: rgba(220, 209, 209, 0);
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgb(213, 203, 203); /* Keeps the shadow effect */
+    box-shadow: 0 4px 10px rgb(213, 203, 203);
     overflow: hidden;
     z-index: 2;
+    margin-top: 100px; /* Add space below the logo */
 }
 
 .column {

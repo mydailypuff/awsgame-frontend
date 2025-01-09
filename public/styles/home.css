@@ -51,7 +51,7 @@ body::before {
 /* newfate2*/
 .column img {
     width: auto;
-    max-height: 45%;
+    max-height: 60%;
     border-radius: 15px;
 }
 
@@ -67,7 +67,7 @@ body::before {
 }
 
 .column p {
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 20px;
 }
 
