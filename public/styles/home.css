@@ -1,4 +1,32 @@
 /* styles/style.css */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-column {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.button-watch, .button-signin {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-watch {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-signin {
+    background-color: #2196F3;
+    color: white;
+}
 
 body {
     margin: 0;
@@ -45,13 +73,24 @@ body::before {
     align-items: center;
     padding: 20px;
     text-align: center;
-   
+    min-width: 500px;
+}
+
+.column .button-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 400px !important;
+    margin: 0 auto !important;
+    flex-wrap: nowrap !important;
 }
 
 /* newfate2*/
 .column img {
     width: auto;
-    max-height: 60%;
+    max-height: 90%;
     border-radius: 15px;
 }
 
@@ -72,24 +111,41 @@ body::before {
 }
 
 .column button {
-    margin: 10px;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 160px !important;
+    flex-shrink: 0 !important;
 }
 
 .button-watch {
-    background-color: #ff0000;
-    color: white;
+    background-color: #e021bd;
+    color: rgb(11, 11, 11);
 }
 
 .button-signin {
-    background-color: #007bff;
-    color: white;
+    background-color: #e021bd;
+    color: rgb(18, 17, 17);
 }
 
-.button-watch:hover, .button-signin:hover {
-    opacity: 0.9;
+.button-watch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    filter: brightness(110%);
+    background-color: red;
 }
+
+.button-signin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    filter: brightness(110%);
+    background-color: rgb(0, 128, 255);
+}
+
