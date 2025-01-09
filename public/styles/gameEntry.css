@@ -35,6 +35,7 @@ body::before {
     display: flex;
     align-items: flex-start;  /* Aligns content to the top */
     padding-bottom: 20px;     /* Adds padding at the bottom */
+    z-index: 2;              /* Ensure container appears above overlay */
   }
   
   /* Image styling */
@@ -70,12 +71,12 @@ body::before {
 
 .column h1 {
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 26px;
     color: #f7f0f0;
 }
 
 .column p {
-    font-size: 18px;
+    font-size: 22px;
     color: #e6d9d9;
 }
 
@@ -88,6 +89,7 @@ body::before {
 .column ol li {
     margin-bottom: 10px; /* Add spacing between the list items */
     line-height: 1.5; /* Improve readability with better line spacing */
+    font-size: 22px;
 }
 
 
@@ -98,7 +100,7 @@ form {
 }
 
 form label {
-    font-size: 19px;
+    font-size: 24px;
     color: #e0d9d9;
     margin-top: 10px;
 }
@@ -109,7 +111,7 @@ form input {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 22px;
     color: #eee5e5;
     background-color: #fff;
     outline: none;
@@ -124,7 +126,7 @@ form input:focus {
     background-color: #28a745;
     color: white;
     padding: 10px 20px;
-    font-size: 22px;
+    font-size: 26px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
